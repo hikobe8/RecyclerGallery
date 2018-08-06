@@ -3,7 +3,9 @@ package com.ray.recyclergallery;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        GalleryRecyclerView galleryRecyclerViewV = findViewById(R.id.recycler_v);
+        galleryRecyclerViewV.setOrientation(LinearLayoutManager.VERTICAL);
+        galleryRecyclerViewV.setAdapter(new MyAdapter());
         GalleryRecyclerView galleryRecyclerView = findViewById(R.id.recycler);
+        galleryRecyclerView.setScaleFactor(0.6f);
+        galleryRecyclerView.setDividerSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, getResources().getDisplayMetrics()));
         galleryRecyclerView.setAdapter(new MyAdapter());
     }
 

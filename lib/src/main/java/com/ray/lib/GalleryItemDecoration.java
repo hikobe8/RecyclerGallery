@@ -15,32 +15,43 @@ import android.view.ViewGroup;
  */
 public class GalleryItemDecoration extends DividerItemDecoration {
 
-    private final int mItemWidth;
+    private final int mItemSize;
     private int mDividerSize;
     private int mOrientation;
 
-    public GalleryItemDecoration(Context context, int orientation, int itemWidth, int dividerSize) {
+    public GalleryItemDecoration(Context context, int orientation, int itemSize, int dividerSize) {
         super(context, orientation);
         mDividerSize = dividerSize;
-        mItemWidth = itemWidth;
+        mItemSize = itemSize;
         mOrientation = orientation;
     }
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
+        int position = parent.getChildAdapterPosition(view);
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         if (mOrientation == HORIZONTAL) {
             int parentWidth = parent.getWidth();
-            int position = parent.getChildAdapterPosition(view);
-            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-            layoutParams.width = mItemWidth;
+            layoutParams.width = mItemSize;
             view.setLayoutParams(layoutParams);
             if (position == 0) {
-                outRect.set(Math.round((parentWidth - mItemWidth) / 2f), 0, Math.round(mDividerSize / 2f), 0);
+                outRect.set(Math.round((parentWidth - mItemSize) / 2f), 0, Math.round(mDividerSize / 2f), 0);
             } else if (position == parent.getLayoutManager().getItemCount() - 1) {
-                outRect.set(Math.round(mDividerSize / 2f), 0, Math.round((parentWidth - mItemWidth) / 2f), 0);
+                outRect.set(Math.round(mDividerSize / 2f), 0, Math.round((parentWidth - mItemSize) / 2f), 0);
             } else {
                 outRect.set(Math.round(mDividerSize / 2f), 0, Math.round(mDividerSize / 2f), 0);
+            }
+        } else {
+            int parentHeight = parent.getHeight();
+            layoutParams.height = mItemSize;
+            view.setLayoutParams(layoutParams);
+            if (position == 0) {
+                outRect.set(0, Math.round((parentHeight - mItemSize) / 2f), 0, Math.round(mDividerSize / 2f));
+            } else if (position == parent.getLayoutManager().getItemCount() - 1) {
+                outRect.set(0, Math.round(mDividerSize / 2f), 0, Math.round(mDividerSize / 2f));
+            } else {
+                outRect.set(0, Math.round(mDividerSize / 2f), 0, Math.round(mDividerSize / 2f));
             }
         }
     }
