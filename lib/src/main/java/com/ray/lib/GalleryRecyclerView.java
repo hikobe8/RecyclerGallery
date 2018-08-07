@@ -18,9 +18,11 @@ import android.view.ViewTreeObserver;
 public class GalleryRecyclerView extends RecyclerView {
 
     private final float DEFAULT_ITEM_SCALE_FACTOR = 0.9f;
+    private final float DEFAULT_ITEM_SHOW_RATIO = 0.1f; //两边展示的区域大小
     private int mDividerSize;
     private int mOrientation = LinearLayoutManager.HORIZONTAL;
     private float mScaleFactor = DEFAULT_ITEM_SCALE_FACTOR;
+    private float mItemShowRatio = DEFAULT_ITEM_SHOW_RATIO;
 
     public GalleryRecyclerView(Context context) {
         this(context, null, 0);
@@ -28,12 +30,10 @@ public class GalleryRecyclerView extends RecyclerView {
 
     public GalleryRecyclerView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
-        init();
-    }
-
-    private void init() {
-        int DEFAULT_DIVIDER_SIZE_IN_DP = 16;
+        int DEFAULT_DIVIDER_SIZE_IN_DP = 8;
         mDividerSize = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_DIVIDER_SIZE_IN_DP, getResources().getDisplayMetrics()));
+        new LinearSnapHelper().attachToRecyclerView(this);
+        setLayoutManager(new LinearLayoutManager(getContext(), mOrientation, false));
     }
 
     public void setDividerSize(int dividerSize) {
@@ -42,14 +42,23 @@ public class GalleryRecyclerView extends RecyclerView {
 
     public void setOrientation(int orientation) {
         mOrientation = orientation;
+        setLayoutManager(new LinearLayoutManager(getContext(), mOrientation, false));
     }
 
     public void setScaleFactor(float scaleFactor) {
         mScaleFactor = scaleFactor;
     }
 
+    public void setItemShowRatio(float itemShowRatio) {
+        mItemShowRatio = itemShowRatio;
+    }
+
     public GalleryRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        setupGallery();
+    }
+
+    private void setupGallery() {
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -61,15 +70,13 @@ public class GalleryRecyclerView extends RecyclerView {
                     }
                     int itemSize = 0;
                     if (mOrientation == LinearLayoutManager.HORIZONTAL) {
-                        itemSize = getWidth() - 4* mDividerSize;
+                        itemSize = Math.round((getWidth() - 2 * mDividerSize) / (1 + 2 * mItemShowRatio * mScaleFactor));
                     } else if (mOrientation == LinearLayoutManager.VERTICAL) {
-                        itemSize = getHeight() - 4*mDividerSize;
+                        itemSize = Math.round((getHeight() - 2 * mDividerSize) / (1 + 2 * mItemShowRatio * mScaleFactor));
                     }
                     mDividerSize = Math.round(mDividerSize - itemSize * (1 - mScaleFactor)/2f);
-                    setLayoutManager(new LinearLayoutManager(getContext(), mOrientation, false));
                     addOnScrollListener(new GalleryScrollListener(itemSize, mDividerSize, mScaleFactor));
                     addItemDecoration(new GalleryItemDecoration(getContext(), mOrientation, itemSize, mDividerSize));
-                    new LinearSnapHelper().attachToRecyclerView(GalleryRecyclerView.this);
                 }
             }
 

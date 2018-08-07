@@ -2,6 +2,7 @@ package com.ray.lib;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -35,28 +36,29 @@ public class GalleryScrollListener extends RecyclerView.OnScrollListener {
         scaleView(recyclerView, position);
         int offset = mTotalScrollDistance - mItemSize * position;
         float percent = (float) Math.max(Math.abs(offset) * 1.0f / mItemSize, 0.0001);
-        int leftPosition = position - 1;
-        int rightPosition = position + 1;
+        int prePosition = position - 1;
+        int nextPosition = position + 1;
         View currentView = layoutManager.findViewByPosition(position);
         if (currentView != null) {
             currentView.setScaleY(1f - (1 - mScaleFactor) * percent);
             currentView.setScaleX(1f - (1 - mScaleFactor) * percent);
         }
-        View preView = layoutManager.findViewByPosition(leftPosition);
+        View preView = layoutManager.findViewByPosition(prePosition);
         if (preView != null) {
-            preView.setScaleY(mScaleFactor + (1 - mScaleFactor) * percent);
             preView.setScaleX(mScaleFactor + (1 - mScaleFactor) * percent);
+            preView.setScaleY(mScaleFactor + (1 - mScaleFactor) * percent);
         }
-        View nextView = layoutManager.findViewByPosition(rightPosition);
+        View nextView = layoutManager.findViewByPosition(nextPosition);
         if (nextView != null) {
-            nextView.setScaleY(mScaleFactor + (1 - mScaleFactor) * percent);
             nextView.setScaleX(mScaleFactor + (1 - mScaleFactor) * percent);
+            nextView.setScaleY(mScaleFactor + (1 - mScaleFactor) * percent);
         }
     }
 
     private void scaleView(RecyclerView recyclerView, int position) {
-        View preView = recyclerView.getLayoutManager().findViewByPosition(position - 2);
-        View nextView = recyclerView.getLayoutManager().findViewByPosition(position + 2);
+        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+        View preView = layoutManager.findViewByPosition(position - 2);
+        View nextView = layoutManager.findViewByPosition(position + 2);
         if (preView != null) {
             preView.setScaleX(mScaleFactor);
             preView.setScaleY(mScaleFactor);

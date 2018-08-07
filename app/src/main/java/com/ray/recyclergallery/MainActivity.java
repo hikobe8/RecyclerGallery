@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
         galleryRecyclerViewV.setOrientation(LinearLayoutManager.VERTICAL);
         galleryRecyclerViewV.setAdapter(new MyAdapter());
         GalleryRecyclerView galleryRecyclerView = findViewById(R.id.recycler);
-        galleryRecyclerView.setScaleFactor(0.6f);
-        galleryRecyclerView.setDividerSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, getResources().getDisplayMetrics()));
+        galleryRecyclerView.setScaleFactor(0.8f);
+        galleryRecyclerView.setItemShowRatio(0.5f);
         galleryRecyclerView.setAdapter(new MyAdapter());
     }
 
