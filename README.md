@@ -4,7 +4,7 @@
 ## How to use ?
 ### Gadle
 ```
-implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+implementation 'com.ray:recyclergallery:1.0.0'
 ```
 ### Layout xml
 ```
