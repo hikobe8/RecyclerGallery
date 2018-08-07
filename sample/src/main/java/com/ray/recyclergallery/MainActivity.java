@@ -24,11 +24,11 @@ public class MainActivity extends AppCompatActivity {
         galleryRecyclerViewV.setAdapter(new MyAdapter());
         GalleryRecyclerView galleryRecyclerView = findViewById(R.id.recycler);
         galleryRecyclerView.setScaleFactor(0.8f);
-        galleryRecyclerView.setItemShowRatio(0.5f);
+        galleryRecyclerView.setItemShowRatio(0.2f);
         galleryRecyclerView.setAdapter(new MyAdapter());
     }
 
-    static class MyAdapter extends RecyclerView.Adapter<MyAdapter.MViewHolder> {
+    public static class MyAdapter extends RecyclerView.Adapter<MyAdapter.MViewHolder> {
 
         static int[] sResIds = new int[]{R.drawable.test1, R.drawable.test2};
 

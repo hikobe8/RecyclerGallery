@@ -18,7 +18,7 @@ import android.view.ViewTreeObserver;
 public class GalleryRecyclerView extends RecyclerView {
 
     private final float DEFAULT_ITEM_SCALE_FACTOR = 0.9f;
-    private final float DEFAULT_ITEM_SHOW_RATIO = 0.1f; //两边展示的区域大小
+    private final float DEFAULT_ITEM_SHOW_RATIO = 0.1f;
     private int mDividerSize;
     private int mOrientation = LinearLayoutManager.HORIZONTAL;
     private float mScaleFactor = DEFAULT_ITEM_SCALE_FACTOR;

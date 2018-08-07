@@ -1,9 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'//添加
 
 android {
     compileSdkVersion 27
-
-
 
     defaultConfig {
         minSdkVersion 15
@@ -22,6 +21,7 @@ android {
         }
     }
 
+    buildToolsVersion '27.0.3'
 }
 
 dependencies {
@@ -31,4 +31,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     api 'com.android.support:recyclerview-v7:27.1.1'
+}
+//添加
+publish {
+    userOrg = 'ray24'//bintray.com用户名
+    groupId = 'com.ray'//jcenter上的路径
+    artifactId = 'recyclergallery'//项目名称
+    publishVersion = '1.0.0'//版本号
+    desc = 'Android Gallery RecyclerView'//描述，不重要
+    website = 'https://github.com/hikobe8/RecyclerGallery'//网站，最好有，不重要
 }
